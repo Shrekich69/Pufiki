@@ -31,8 +31,13 @@ function switchToNextTab() {
         });
         const nextIndex = currentIndex + 1;
 
-        chrome.tabs.update(tabs[nextIndex].id, { active: true });
-        console.log("Switched to the next tab");
+        if (nextIndex < tabs.length) {
+            chrome.tabs.update(tabs[nextIndex].id, { active: true });
+            console.log("Switched to the next tab");
+        } else {
+            window.open();
+            console.log("Opened home page");
+        }
     });
 }
 
