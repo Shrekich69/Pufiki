@@ -35,7 +35,7 @@ function switchToNextTab() {
             chrome.tabs.update(tabs[nextIndex].id, { active: true });
             console.log("Switched to the next tab");
         } else {
-            window.open("about:home", "tab");
+            chrome.tabs.create({ url: "about:home" });
             console.log("Opened home page");
         }
     });
