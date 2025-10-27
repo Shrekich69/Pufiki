@@ -29,14 +29,14 @@ function switchToNextTab() {
                 return tab;
             }
         });
-        const nextIndex = currentIndex + 1;
+        const nextIndex = (currentIndex + 1 >= tabs.length) ? chrome.tabs.create({ url: "about:newtab" }, (newtab) => {
+            console.log(newtab);
+            return -1;
+        }) : currentIndex + 1;
 
-        if (nextIndex < tabs.length) {
+        if (nextIndex >= 0) {
             chrome.tabs.update(tabs[nextIndex].id, { active: true });
             console.log("Switched to the next tab");
-        } else {
-            chrome.tabs.create({ url: "about:home" });
-            console.log("Opened home page");
         }
     });
 }
