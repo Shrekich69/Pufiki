@@ -1,0 +1,39 @@
+{
+    "manifest_version": 2,
+    "name": "QuickSwitch",
+    "version": "1.0",
+
+    "description": "Переключение между соседними вкладками",
+    "icons": {
+        "16": "/icons/penicat16.png",
+        "32": "/icons/penicat32.png",
+        "48": "/icons/penicat48.png",
+        "128": "/icons/penicat128.png"
+    },
+
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
+    },
+    "commands": {
+        "prev_tab": {
+            "suggested_key": {
+                "default": "Alt+Q"
+            },
+            "description":"Пред. вкладка"
+        },
+        "next_tab": {
+            "suggested_key": {
+                "default": "Alt+E"
+            },
+            "description": "След. вкладка"
+        }
+    },
+
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ]
+}
