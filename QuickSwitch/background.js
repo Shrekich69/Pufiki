@@ -17,7 +17,6 @@ function getCurrentIndex(tabsArray) {
             break;
         }
     }
-    
     const currentIndex = tabsArray.findIndex( (tab) => tab.id === currentTab.id);
     return currentIndex;
 }
@@ -28,7 +27,7 @@ function switchToNextTab() {
         const nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1;
 
         chrome.tabs.update(tabs[nextIndex].id, { active: true });
-        console.log("Switched to the next tab", tabs[nextIndex - 1]);
+        console.log("Switched to the next tab");
     });
 }
 
@@ -38,6 +37,6 @@ function switchToPrevTab() {
         const prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
 
         chrome.tabs.update(tabs[prevIndex].id, { active: true });
-        console.log("Switched to the previous tab", tabs[prevIndex + 1]);
+        console.log("Switched to the previous tab");
     });
 }
