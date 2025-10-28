@@ -9,7 +9,7 @@ chrome.commands.onCommand.addListener( (command) => {
     }
 })
 
-function getCurrentTab(tabsArray) {
+function getCurrentIndex(tabsArray) {
     let currentTab;
     for (const element of tabsArray) {
         if (element.active === true) {
@@ -17,42 +17,27 @@ function getCurrentTab(tabsArray) {
             break;
         }
     }
-    return currentTab;
+    
+    const currentIndex = tabsArray.findIndex( (tab) => tab.id === currentTab.id);
+    return currentIndex;
 }
 
 function switchToNextTab() {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
-        const currentTab = getCurrentTab(tabs);
-        
-        const currentIndex = tabs.findIndex(tab => {
-            if (tab.id === currentTab.id) {
-                return tab;
-            }
-        });
-        const nextIndex = (currentIndex + 1 >= tabs.length) ? chrome.tabs.create({ url: "about:newtab" }, (newtab) => {
-            console.log(newtab);
-            return -1;
-        }) : currentIndex + 1;
+        const currentIndex = getCurrentIndex(tabs);
+        const nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1;
 
-        if (nextIndex >= 0) {
-            chrome.tabs.update(tabs[nextIndex].id, { active: true });
-            console.log("Switched to the next tab");
-        }
+        chrome.tabs.update(tabs[nextIndex].id, { active: true });
+        console.log("Switched to the next tab", tabs[nextIndex - 1]);
     });
 }
 
 function switchToPrevTab() {
     chrome.tabs.query({ currentWindow: true }, (tabs) => {
-        const currentTab = getCurrentTab(tabs);
-        
-        const currentIndex = tabs.findIndex(tab => {
-            if (tab.id === currentTab.id) {
-                return tab;
-            }
-        });
-        const prevIndex = (currentIndex - 1 < 0) ? 0 : currentIndex - 1;
+        const currentIndex = getCurrentIndex(tabs);
+        const prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
 
         chrome.tabs.update(tabs[prevIndex].id, { active: true });
-        console.log("Switched to the previous tab");
+        console.log("Switched to the previous tab", tabs[prevIndex + 1]);
     });
 }
