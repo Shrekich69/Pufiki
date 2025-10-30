@@ -14,7 +14,6 @@ function getCurrentIndex(tabsArray) {
     for (const element of tabsArray) {
         if (element.active === true) {
             currentTab = element;
-            break;
         }
     }
     const currentIndex = tabsArray.findIndex( (tab) => tab.id === currentTab.id);
@@ -27,7 +26,6 @@ function switchToNextTab() {
         const nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1;
 
         chrome.tabs.update(tabs[nextIndex].id, { active: true });
-        console.log("Switched to the next tab");
     });
 }
 
@@ -37,6 +35,5 @@ function switchToPrevTab() {
         const prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
 
         chrome.tabs.update(tabs[prevIndex].id, { active: true });
-        console.log("Switched to the previous tab");
     });
 }
