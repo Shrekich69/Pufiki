@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "QuickSwitch",
-    "version": "1.2",
+    "version": "1.2.1",
 
     "description": "Переключение между соседними вкладками",
     "icons": {

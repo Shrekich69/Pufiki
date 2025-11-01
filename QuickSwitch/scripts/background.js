@@ -1,9 +1,11 @@
 chrome.runtime.onMessage.addListener( (req, sender, sendResp) => {
     switch (req.type) {
         case "q":
+        case "й":
             switchToPrevTab();
             break;
         case "e":
+        case "у":
             switchToNextTab();
             break;
     }
@@ -12,8 +14,8 @@ chrome.runtime.onMessage.addListener( (req, sender, sendResp) => {
 function getCurrentIndex(tabsArray) {
     let currentTab;
     for (let tab of tabsArray) {
-        if (tab.url === "about:firefoxview" && tab.index != 0) {
-            chrome.tabs.move(tab.id, { index: 0 })
+        if (tab.url === "about:firefoxview") {
+            chrome.tabs.remove(tab.id);
         }
         if (tab.active === true) {
             currentTab = tab;
