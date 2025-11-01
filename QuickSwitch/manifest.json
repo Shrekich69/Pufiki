@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "QuickSwitch",
-    "version": "1.1",
+    "version": "1.2",
 
     "description": "Переключение между соседними вкладками",
     "icons": {
@@ -13,10 +13,16 @@
 
     "background": {
         "scripts": [
-            "background.js"
+            "scripts/background.js"
         ],
         "persistent": false
     },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["scripts/keyHandler.js"]
+        }
+    ],
     "commands": {
         "prev_tab": {
             "suggested_key": {
@@ -29,6 +35,12 @@
                 "default": "Alt+E"
             },
             "description": "След. вкладка"
+        },
+        "new_tab": {
+            "suggested_key": {
+                "default": "Alt+W"
+            },
+            "description": "Новая вкладка"
         }
     },
 

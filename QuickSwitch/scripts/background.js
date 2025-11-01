@@ -1,23 +1,25 @@
-chrome.commands.onCommand.addListener( (command) => {
-    switch (command) {
-        case "next_tab":
-            switchToNextTab();
-            break;
-        case "prev_tab":
+chrome.runtime.onMessage.addListener( (req, sender, sendResp) => {
+    switch (req.type) {
+        case "q":
             switchToPrevTab();
             break;
+        case "e":
+            switchToNextTab();
+            break;
     }
-})
+});
 
 function getCurrentIndex(tabsArray) {
     let currentTab;
-    for (const element of tabsArray) {
-        if (element.active === true) {
-            currentTab = element;
+    for (let tab of tabsArray) {
+        if (tab.url === "about:firefoxview" && tab.index != 0) {
+            chrome.tabs.move(tab.id, { index: 0 })
+        }
+        if (tab.active === true) {
+            currentTab = tab;
         }
     }
-    const currentIndex = tabsArray.findIndex( (tab) => tab.id === currentTab.id);
-    return currentIndex;
+    return currentTab.index;
 }
 
 function switchToNextTab() {
