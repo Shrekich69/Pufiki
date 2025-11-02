@@ -13,16 +13,12 @@
 
     "background": {
         "scripts": [
-            "scripts/background.js"
+            "scripts/backgroundScripts/catchEvents.js",
+            "scripts/backgroundScripts/restoretab.js",
+            "scripts/backgroundScripts/switchTab.js"
         ],
         "persistent": false
     },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["scripts/keyHandler.js"]
-        }
-    ],
     "commands": {
         "prev_tab": {
             "suggested_key": {
@@ -30,22 +26,53 @@
             },
             "description":"Пред. вкладка"
         },
+        "first_tab": {
+            "suggested_key": {
+                "default": "Shift+Alt+Q"
+            },
+            "description": "Переключиться на первую вкладку"
+        },
         "next_tab": {
             "suggested_key": {
                 "default": "Alt+E"
             },
             "description": "След. вкладка"
         },
+        "last_tab": {
+            "suggested_key": {
+                "default": "Shift+Alt+E"
+            },
+            "description":"Переключиться на последнюю вкладку"
+        },
+        
         "new_tab": {
             "suggested_key": {
                 "default": "Alt+W"
             },
             "description": "Новая вкладка"
+        },
+        "restore_tab": {
+            "suggested_key": {
+                "default": "Alt+S"
+            },
+            "description": "Восстановить закрытую вкладку"
+        }
+    },
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "@QuickSwitch-Shrekich",
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            }
         }
     },
 
     "permissions": [
         "tabs",
-        "activeTab"
+        "activeTab",
+        "history"
     ]
 }
