@@ -1,0 +1,4 @@
+*.rar
+*.zip
+*.bat
+exclude.txt
