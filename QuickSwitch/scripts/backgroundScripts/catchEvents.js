@@ -1,25 +1,25 @@
-browser.commands.onCommand.addListener( (cmd) => {
+chrome.runtime.onMessage.addListener( (mess) => {
     browser.tabs.query({ currentWindow: true }, (tabs) => {
-        switch (cmd) {
+        switch (mess) {
             //Управление вкладками
-            case 'prev_tab':
+            case "E":
                 switchToPrevTab(tabs);
                 break;
-            case 'first_tab':
+            case "Q":
                 let beggining = (tabs[0].url === "about:firefoxview") ? 1 : 0;
                 browser.tabs.update(tabs[beggining].id, { active: true });
                 break;
-            case 'next_tab':
+            case "e":
                 switchToNextTab(tabs);
                 break;
-            case 'last_tab':
+            case "q":
                 browser.tabs.update(tabs[tabs.length - 1].id, { active: true });
                 break;
             //Создание вкладок
-            case 'new_tab':
+            case "t":
                 browser.tabs.create({});
                 break;
-            case 'restore_tab':
+            case "s":
                 restoreClosedTab()
                 break;
         }

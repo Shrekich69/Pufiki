@@ -1,9 +1,6 @@
 function getCurrentIndex(tabsArray) {
     let currentTab;
     for (let tab of tabsArray) {
-        if (tab.url === "about:firefoxview") {
-            browser.tabs.move(tab.id, { index: 0 })
-        }
         if (tab.active === true) {
             currentTab = tab;
         }
@@ -13,13 +10,19 @@ function getCurrentIndex(tabsArray) {
 
 function switchToNextTab(tabs) {
     const currentIndex = getCurrentIndex(tabs);
-    const nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1;
+    let nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1
+    while (tabs[nextIndex].url.indexOf("about") !== -1) {
+        nextIndex = (nextIndex + 1 > tabs.length) ? 0 : nextIndex += 1;
+    }
 
     browser.tabs.update(tabs[nextIndex].id, { active: true });
 }
 function switchToPrevTab(tabs) {
     const currentIndex = getCurrentIndex(tabs);
-    const prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
+    let prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
+    while (tabs[prevIndex].url.indexOf("about") !== -1) {
+        prevIndex = (prevIndex - 1 < 0) ? tabs.length - 1 : prevIndex -= 1;
+    }
 
     browser.tabs.update(tabs[prevIndex].id, { active: true });
 }
