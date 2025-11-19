@@ -1,3 +1,3 @@
-document.addEventListener('keypress', (event) => {
-    chrome.runtime.sendMessage(event.key);
+document.addEventListener('keypress', async (event) => {
+    await browser.runtime.sendMessage(event.key);
 });

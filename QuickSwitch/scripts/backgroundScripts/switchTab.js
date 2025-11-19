@@ -8,21 +8,21 @@ function getCurrentIndex(tabsArray) {
     return currentTab.index;
 }
 
-function switchToNextTab(tabs) {
+async function switchToNextTab(tabs) {
     const currentIndex = getCurrentIndex(tabs);
     let nextIndex = (currentIndex + 1 >= tabs.length) ? 0 : currentIndex + 1
     while (tabs[nextIndex].url.indexOf("about") !== -1) {
-        nextIndex = (nextIndex + 1 > tabs.length) ? 0 : nextIndex += 1;
+        nextIndex = (nextIndex + 1 > tabs.length - 1) ? 0 : nextIndex + 1;
     }
 
-    browser.tabs.update(tabs[nextIndex].id, { active: true });
+    await browser.tabs.update(tabs[nextIndex].id, { active: true });
 }
-function switchToPrevTab(tabs) {
+async function switchToPrevTab(tabs) {
     const currentIndex = getCurrentIndex(tabs);
     let prevIndex = (currentIndex - 1 < 0) ? tabs.length - 1 : currentIndex - 1;
     while (tabs[prevIndex].url.indexOf("about") !== -1) {
-        prevIndex = (prevIndex - 1 < 0) ? tabs.length - 1 : prevIndex -= 1;
+        prevIndex = (prevIndex - 1 < 0) ? tabs.length - 1 : prevIndex - 1;
     }
 
-    browser.tabs.update(tabs[prevIndex].id, { active: true });
+    await browser.tabs.update(tabs[prevIndex].id, { active: true });
 }

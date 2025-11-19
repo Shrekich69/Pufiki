@@ -1,27 +1,59 @@
-chrome.runtime.onMessage.addListener( (mess) => {
-    browser.tabs.query({ currentWindow: true }, (tabs) => {
+let specialKey = false;
+browser.runtime.onMessage.addListener( async (mess) => {
+    await browser.tabs.query({ currentWindow: true }, async (tabs) => {
         switch (mess) {
+
             //Управление вкладками
+            case "g":
+            case "G":
+                specialKey = true;
+                break;
             case "E":
-                switchToPrevTab(tabs);
+                if (specialKey)
+                    switchToPrevTab(tabs);
+                specialKey = false;
                 break;
             case "Q":
-                let beggining = (tabs[0].url === "about:firefoxview") ? 1 : 0;
-                browser.tabs.update(tabs[beggining].id, { active: true });
+                if (specialKey) {
+                    let beggining = (tabs[0].url.indexOf("about") !== -1)
+                    ? 1 : 0;
+                    await browser.tabs.update(tabs[beggining].id, { active: true });
+                }
                 break;
             case "e":
-                switchToNextTab(tabs);
+                if (specialKey)
+                    switchToNextTab(tabs);
+                specialKey = false;
                 break;
             case "q":
-                browser.tabs.update(tabs[tabs.length - 1].id, { active: true });
+                if (specialKey) {
+                    let end = (tabs[tabs.length - 1].url.indexOf("about") !== -1)
+                    ? tabs.length - 2 : tabs.length - 1;
+                    await browser.tabs.update(tabs[end].id, { active: true });
+                }
                 break;
+
             //Создание вкладок
             case "t":
-                browser.tabs.create({});
+                if (specialKey)
+                    await browser.tabs.create({});
                 break;
             case "s":
-                restoreClosedTab()
+                if (specialKey)
+                    await browser.sessions.restore();
+                break;
+
+            default:
+                specialKey = false;
                 break;
         }
     });
+});
+
+browser.tabs.onUpdated.addListener( async () => {
+    await groupTabs();
+    await ungroupIfOne();
+});
+browser.tabs.onRemoved.addListener( async (tabId) => {
+    await ungroupIfOne(tabId);
 });

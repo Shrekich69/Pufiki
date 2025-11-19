@@ -1,9 +1,9 @@
 {
     "manifest_version": 2,
     "name": "QuickSwitch",
-    "version": "1.4.6",
+    "version": "1.5.7",
 
-    "description": "Переключение между соседними вкладками",
+    "description": "Удобная работа с вкладками",
     "icons": {
         "16": "/icons/penicat16.png",
         "32": "/icons/penicat32.png",
@@ -11,11 +11,22 @@
         "128": "/icons/penicat128.png"
     },
 
+    "browser_action": {
+        "default_icon": {
+            "16": "/icons/penicat16.png",
+            "32": "/icons/penicat32.png",
+            "48": "/icons/penicat48.png",
+            "128": "/icons/penicat128.png"
+        },
+        "default_title": "QuickSwitch",
+        "default_popup": "popup/popup.html"
+    },
     "background": {
         "scripts": [
+            "popup/popup_script.js",
             "scripts/backgroundScripts/catchEvents.js",
-            "scripts/backgroundScripts/restoreTab.js",
-            "scripts/backgroundScripts/switchTab.js"
+            "scripts/backgroundScripts/switchTab.js",
+            "scripts/backgroundScripts/tabGrouper.js"
         ],
         "persistent": false
     },
@@ -23,6 +34,7 @@
         {
             "matches": ["<all_urls>"],
             "js": ["scripts/contentScripts/keyHandler.js"]
+        }
     ],
     "commands": {
         "prev_tab": {
@@ -77,6 +89,9 @@
 
     "permissions": [
         "tabs",
-        "activeTab"
+        "tabGroups",
+        "storage",
+        "activeTab",
+        "sessions"
     ]
 }
