@@ -22,13 +22,21 @@
                 margin-bottom: 5px;
             }
 
-            button {
+            button, input:not(.colorInput) {
                 font-weight: 700;
                 font-size: large;
-                height: 30px;
+                height: 18px;
                 border-radius: 7px;
                 background: rgb(126, 126, 126);
-                color: rgb(177, 177, 177);
+                color: rgb(199, 199, 199);
+            }
+            .colorInput {
+                background: rgb(126, 126, 126);
+                padding: 0;
+                margin-right: 5px;
+                height: 20px;
+                width: 20px;
+                border-radius: 7px;
             }
 
             header * {
@@ -45,6 +53,23 @@
                 border: solid 1px grey;
                 margin: 5px;
             }
+            #groupsList {
+                list-style: none;
+                margin: 5px;
+                padding: 0;
+            }
+            #groupsList div:not(:first-child) {
+                border-top: solid 2px grey;
+                margin-top: 5px;
+                padding-top: 4px;
+            }
+            #modal {
+                border-radius: 7px;
+            }
+
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -57,9 +82,19 @@
         </div>
         <div id="tabGroups">
             <header><h3>Группы вкладок</h3></header>
-            <ul>
+            <ul id="groupsList">
                 
             </ul>
+            <div id="modal" class="hidden">
+                <input type="button" class="colorInput" style="background: blue;">
+                <input type="button" class="colorInput" style="background: turquoise;">
+                <input type="button" class="colorInput" style="background: green;">
+                <input type="button" class="colorInput" style="background: yellow;">
+                <input type="button" class="colorInput" style="background: orange;">
+                <input type="button" class="colorInput" style="background: red;">
+                <input type="button" class="colorInput" style="background: pink;">
+                <input type="button" class="colorInput" style="background: purple;">
+            </div>
         </div>
         <script src="popup_script.js"></script>
     </body>

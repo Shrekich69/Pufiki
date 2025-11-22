@@ -19,6 +19,7 @@ browser.runtime.onMessage.addListener( async (mess) => {
                     ? 1 : 0;
                     await browser.tabs.update(tabs[beggining].id, { active: true });
                 }
+                specialKey = false;
                 break;
             case "e":
                 if (specialKey)
@@ -31,29 +32,49 @@ browser.runtime.onMessage.addListener( async (mess) => {
                     ? tabs.length - 2 : tabs.length - 1;
                     await browser.tabs.update(tabs[end].id, { active: true });
                 }
+                specialKey = false;
                 break;
 
             //Создание вкладок
             case "t":
                 if (specialKey)
                     await browser.tabs.create({});
+                specialKey = false;
                 break;
             case "s":
                 if (specialKey)
                     await browser.sessions.restore();
+                specialKey = false;
                 break;
-
+            
             default:
                 specialKey = false;
                 break;
         }
     });
+
 });
 
 browser.tabs.onUpdated.addListener( async () => {
     await groupTabs();
     await ungroupIfOne();
 });
-browser.tabs.onRemoved.addListener( async (tabId) => {
-    await ungroupIfOne(tabId);
+
+browser.runtime.onConnect.addListener( (port) => {
+    console.assert(port.name === 'content-script');
+
+    port.onMessage.addListener( (message) => {
+        if (message === 'getGroups') {
+            browser.tabGroups.query({}, (groups) => {
+                port.postMessage(groups);
+            });
+        } else switch (message.type) {
+            case "text":
+                browser.tabGroups.update(message.id, { title: message.value });
+                break;
+            case "color":
+                browser.tabGroups.update(message.id, { color: message.value });
+                break;
+        }
+    });
 });

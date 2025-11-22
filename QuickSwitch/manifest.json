@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "QuickSwitch",
-    "version": "1.5.7",
+    "version": "1.6.8",
 
     "description": "Удобная работа с вкладками",
     "icons": {
@@ -23,7 +23,6 @@
     },
     "background": {
         "scripts": [
-            "popup/popup_script.js",
             "scripts/backgroundScripts/catchEvents.js",
             "scripts/backgroundScripts/switchTab.js",
             "scripts/backgroundScripts/tabGrouper.js"
@@ -33,7 +32,9 @@
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
-            "js": ["scripts/contentScripts/keyHandler.js"]
+            "js": [
+                "scripts/contentScripts/keyHandler.js"
+            ]
         }
     ],
     "commands": {
