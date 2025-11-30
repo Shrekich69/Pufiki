@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "QuickSwitch",
-    "version": "1.6.8",
+    "version": "1.7.8",
 
     "description": "Удобная работа с вкладками",
     "icons": {

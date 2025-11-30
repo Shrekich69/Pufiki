@@ -8,7 +8,7 @@
             }
 
             body {
-                background: rgb(41, 41, 41);
+                background: rgb(73, 73, 73);
                 color: rgb(230, 230, 230);
                 margin: 0px;
             }
@@ -22,49 +22,149 @@
                 margin-bottom: 5px;
             }
 
-            button, input:not(.colorInput) {
-                font-weight: 700;
-                font-size: large;
-                height: 18px;
-                border-radius: 7px;
-                background: rgb(126, 126, 126);
-                color: rgb(199, 199, 199);
-            }
-            .colorInput {
-                background: rgb(126, 126, 126);
-                padding: 0;
-                margin-right: 5px;
-                height: 20px;
-                width: 20px;
-                border-radius: 7px;
-            }
-
             header * {
-                background: rgb(104, 97, 92);
+                font-weight: 600;
+                background: rgba(50, 50, 50);
                 text-align: center;
                 margin: 0;
+                padding-bottom: 2px;
             }
             header img {
                 display: inline;
             }
 
-            #tabGroups {
-                border-radius: 5px;
-                border: solid 1px grey;
-                margin: 5px;
+            #main_header {
+                padding: 8px;
+                user-select: none;
             }
+
+            /*Контейнер со всем содержимым*/
+            #groups {
+                overflow: hidden;
+                border-radius: 4px;
+                margin: 10px;
+
+                background: #929292;
+            }
+            
+            /*Сам список с настройками групп*/
             #groupsList {
                 list-style: none;
-                margin: 5px;
-                padding: 0;
+                margin: 0;
+                padding: 9px;
             }
-            #groupsList div:not(:first-child) {
-                border-top: solid 2px grey;
-                margin-top: 5px;
-                padding-top: 4px;
+            #groupsList .parGroup:not(:first-child) {
+                border-top: solid 2px #323232;
+                margin-top: 6px;
+                padding-top: 6px;
             }
-            #modal {
-                border-radius: 7px;
+
+            
+
+            /*Дизайн групп вкладок*/
+            .parGroup {
+                width: 100%;
+
+                color: #dfdfdf;
+                font-weight: 600;
+            }
+            .group {
+                height: 20px;
+                border-radius: 4px;
+
+                display: flex;
+                align-items: stretch;
+                overflow: hidden;
+            }
+            .nameInput {
+                flex: 1;
+
+                font-weight: 600;
+
+                background: #414141;
+                color: #ffffff;
+                outline: none;
+
+                border: 0;
+
+                transition: 0.2s;
+            }
+            .nameInput:focus {
+                background: #929292;
+            }
+            .colorInput { 
+                flex-shrink: 0;
+                width: 20px;
+
+                border: 0;
+            }
+
+            /*Дизайн меню выбора цвета группы*/
+            .colorMenu {
+                
+            }
+            .colorOption {
+                margin: 2px;
+                min-width: 20px;
+                border: 0;
+                border-radius: 4px;
+            }
+
+            .option {
+                position: relative;
+                display: flex;
+                background-color: #727272;
+                border-radius: 5px;
+                height: 25px;
+                width: 100%;
+                box-sizing: border-box;
+
+                padding: 3px;
+                margin-bottom: 4px;
+
+                user-select: none;
+            }
+            .option > * {
+                cursor: pointer;
+            }
+            .toggle-btn {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+
+                width: 25px;
+                height: 16px;
+            }
+            .toggle-btn input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+            .switchSlider {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+
+                background-color: white;
+                transition: all 0.2s ease;
+                border-radius: 8px;
+            }
+            .switchSlider::before {
+                content: '';
+                position: absolute;
+                height: 14px;
+                width: 14px;
+                left: 1px;
+                top: 1px;
+                background-color: #8c8c8c;
+                transition: all 0.15s ease;
+                border-radius: 50%;
+            }
+            .toggle-btn input:checked + .switchSlider::before {
+                transform: translateX(9px);
+                background-color: green;
             }
 
             .hidden {
@@ -75,26 +175,14 @@
     <body>
         <div>
             <header>
-                <div>
+                <div id="main_header">
                     <h1><img src="/icons/penicat32.png">Quick Switch</h1>
                 </div>
             </header>
         </div>
-        <div id="tabGroups">
+        <div id="groups">
             <header><h3>Группы вкладок</h3></header>
-            <ul id="groupsList">
-                
-            </ul>
-            <div id="modal" class="hidden">
-                <input type="button" class="colorInput" style="background: blue;">
-                <input type="button" class="colorInput" style="background: turquoise;">
-                <input type="button" class="colorInput" style="background: green;">
-                <input type="button" class="colorInput" style="background: yellow;">
-                <input type="button" class="colorInput" style="background: orange;">
-                <input type="button" class="colorInput" style="background: red;">
-                <input type="button" class="colorInput" style="background: pink;">
-                <input type="button" class="colorInput" style="background: purple;">
-            </div>
+            <ul id="groupsList"></ul> 
         </div>
         <script src="popup_script.js"></script>
     </body>
